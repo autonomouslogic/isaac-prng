@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
 
-gcc -O readable.c -o readable
+test -f readable && rm readable
+gcc -m32 -O readable.c -o readable
 ./readable

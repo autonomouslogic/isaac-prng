@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
 
-gcc -O -DNEVER rand.c -o rand
+test -f rand && rm rand
+gcc -m32 -O -DNEVER rand.c -o rand
 ./rand
