@@ -12,7 +12,9 @@
 
 * https://github.com/apache/commons-math/blob/MATH_3_6_1/src/main/java/org/apache/commons/math3/random/ISAACRandom.java
 * https://github.com/apache/commons-math/blob/MATH_3_6_1/src/test/java/org/apache/commons/math3/random/ISAACTest.java
+* https://github.com/apache/commons-rng/blob/RNG_1_3/commons-rng-core/src/main/java/org/apache/commons/rng/core/source32/ISAACRandom.java
+* https://github.com/apache/commons-rng/blob/RNG_1_3/commons-rng-core/src/test/java/org/apache/commons/rng/core/source32/ISAACRandomTest.java
 * [Added by Eldar Agalarov in 2011](https://issues.apache.org/jira/browse/MATH-710)
 * Includes an extra initialisation step not included in the reference implementation for when the provided seed is less than 256 integers:\
   `(int) (0x6c078965L * (k ^ k >> 30) + j & 0xffffffffL)`\
-  I'm not sure where this comes from.
+  This is the seed init from [Mersenne Twister](http://en.wikipedia.org/wiki/Mersenne_twister).

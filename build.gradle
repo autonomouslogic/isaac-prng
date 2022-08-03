@@ -1,31 +1,27 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.7.10'
-    id 'application'
+	id "org.jetbrains.kotlin.jvm" version "1.7.10"
+	id "application"
 }
 
-group = 'com.autonomouslogic.isaac'
-version = '1.0-SNAPSHOT'
+group = "com.autonomouslogic.isaac"
+version = "1.0-SNAPSHOT"
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+	testImplementation "org.jetbrains.kotlin:kotlin-test"
 }
 
 test {
-    useJUnitPlatform()
+	useJUnitPlatform()
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = '1.8'
+	kotlinOptions.jvmTarget = 11
 }
 
 compileTestKotlin {
-    kotlinOptions.jvmTarget = '1.8'
-}
-
-application {
-    mainClassName = 'MainKt'
+	kotlinOptions.jvmTarget = 11
 }
