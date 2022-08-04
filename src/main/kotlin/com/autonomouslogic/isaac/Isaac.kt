@@ -1,21 +1,20 @@
 import java.util.Collections.min
 import java.util.GregorianCalendar
 
-@OptIn(ExperimentalUnsignedTypes::class)
 class Isaac {
-	val randrsl: UIntArray
+	val randrsl: IntArray
 	var randcnt: Int = 0
-	val mm: UIntArray = UIntArray(256)
-	var aa: UInt = 0u
-	var bb: UInt = 0u
-	var cc: UInt = 0u
+	val mm: IntArray = IntArray(256)
+	var aa: Int = 0
+	var bb: Int = 0
+	var cc: Int = 0
 
-	constructor(seed: UIntArray) {
+	constructor(seed: IntArray) {
 		randrsl = createSeed(seed)
 		randinit()
 	}
 
-	fun nextInt(): UInt {
+	fun nextInt(): Int {
 		if (randcnt == 256) {
 			isaac()
 			randcnt = 0
@@ -24,12 +23,11 @@ class Isaac {
 	}
 
 	private fun isaac() {
-		var i: UInt
-		var x: UInt
-		var y: UInt
+		var x: Int
+		var y: Int
 
 		// cc just gets incremented once per 256 results
-		cc = cc + 1u
+		cc = cc + 1
 		// then combined with bb
 		bb = bb + cc;
 
@@ -38,14 +36,14 @@ class Isaac {
 
 			when (i%4) {
 				0 -> aa = aa xor (aa shl 13)
-				1 -> aa = aa xor (aa shr 6)
+				1 -> aa = aa xor (aa ushr 6)
 				2 -> aa = aa xor (aa shl 2)
-				3 -> aa = aa xor (aa shr 16)
+				3 -> aa = aa xor (aa ushr 16)
 			}
 			aa = mm[(i + 128) % 256] + aa
-			y  = mm[(x shr 2).mod(256u) as Int] + aa + bb
+			y  = mm[(x ushr 2).mod(256)] + aa + bb
 			mm[i] = y
-			bb = mm[(y shr 10).mod(256u) as Int] + x
+			bb = mm[(y ushr 10).mod(256)] + x
 			randrsl[i] = bb
 
 			/* Note that bits 2..9 are chosen from x but 10..17 are chosen
@@ -57,12 +55,12 @@ class Isaac {
 		}
 	}
 
-	private fun mix(s: UIntArray) {
+	private fun mix(s: IntArray) {
 		s[0] = s[0] xor ( s[1] shl 11 )
 		s[3] += s[0]
 		s[1] += s[2]
 
-		s[1] = s[1] xor ( s[2] shr 2 )
+		s[1] = s[1] xor ( s[2] ushr 2 )
 		s[4] += s[1]
 		s[2] += s[3]
 
@@ -70,7 +68,7 @@ class Isaac {
 		s[5] += s[2]
 		s[3] += s[4]
 
-		s[3] = s[3] xor ( s[4] shr 16 )
+		s[3] = s[3] xor ( s[4] ushr 16 )
 		s[6] += s[3]
 		s[4] += s[5]
 
@@ -78,7 +76,7 @@ class Isaac {
 		s[7] += s[4]
 		s[5] += s[6]
 
-		s[5] = s[5] xor ( s[6] shr 4 )
+		s[5] = s[5] xor ( s[6] ushr 4 )
 		s[0] += s[5]
 		s[6] += s[7]
 
@@ -86,13 +84,13 @@ class Isaac {
 		s[1] += s[6]
 		s[7] += s[0]
 
-		s[7] = s[7] xor ( s[0] shr 9 )
+		s[7] = s[7] xor ( s[0] ushr 9 )
 		s[2] += s[7]
 		s[0] += s[1]
 	}
 
 	private fun randinit() {
-		val s = UIntArray(8)
+		val s = IntArray(8)
 		for (i in s.indices) {
 			s[i] = GOLDEN_RATIO
 		}
@@ -156,15 +154,15 @@ class Isaac {
 
 	companion object {
 		val SEED_SIZE: Int = 256
-		val GOLDEN_RATIO: UInt = 0x9e3779b9u
+		val GOLDEN_RATIO: Int = 0x9e3779b9.toInt()
 
-		fun createSeed(seed: UIntArray): UIntArray {
+		fun createSeed(seed: IntArray): IntArray {
 			if (seed.size == SEED_SIZE) {
 				return seed
 			}
-			val newSeed = UIntArray(SEED_SIZE)
+			val newSeed = IntArray(SEED_SIZE)
 			val n = minOf(seed.size, SEED_SIZE)
-			for (i in 0..SEED_SIZE-1) {
+			for (i in 0..n) {
 				newSeed[i] = seed[i]
 			}
 			return newSeed
