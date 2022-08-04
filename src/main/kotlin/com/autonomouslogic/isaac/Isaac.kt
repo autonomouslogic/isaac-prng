@@ -162,7 +162,7 @@ class Isaac {
 			}
 			val newSeed = IntArray(SEED_SIZE)
 			val n = minOf(seed.size, SEED_SIZE)
-			for (i in 0..n) {
+			for (i in 0..n-1) {
 				newSeed[i] = seed[i]
 			}
 			return newSeed
