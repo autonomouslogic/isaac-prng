@@ -25,4 +25,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Test
+        run: ./gradlew check --stacktrace
+
+      - name: Build
         run: ./gradlew build --stacktrace
