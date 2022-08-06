@@ -272,7 +272,7 @@ internal class IsaacTest {
 		val rng = Isaac(seed)
 		for (i in sequence.indices) {
 			val v = sequence[i]
-			assertEquals(Integer.toHexString(v), Integer.toHexString(rng.nextInt()), "i: $i")
+			assertEquals(v, rng.nextInt(), "i: $i")
 		}
 	}
 }

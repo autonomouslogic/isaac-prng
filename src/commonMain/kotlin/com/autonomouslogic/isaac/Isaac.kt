@@ -1,6 +1,3 @@
-import java.util.Collections.min
-import java.util.GregorianCalendar
-
 class Isaac {
 	val randrsl: IntArray
 	var randcnt: Int = 0

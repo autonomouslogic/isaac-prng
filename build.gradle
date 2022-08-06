@@ -1,27 +1,86 @@
 plugins {
-	id "org.jetbrains.kotlin.jvm" version "1.7.10"
+	//id "org.jetbrains.kotlin.jvm" version "1.7.10"
+	id "org.jetbrains.kotlin.multiplatform" version "1.7.10"
 	id "application"
+	id "idea"
+	id "org.danilopianini.git-sensitive-semantic-versioning-gradle-plugin" version "0.3.13"
+	id "maven-publish"
 }
 
 group = "com.autonomouslogic.isaac"
-version = "1.0-SNAPSHOT"
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	testImplementation "org.jetbrains.kotlin:kotlin-test"
+	//testImplementation "org.jetbrains.kotlin:kotlin-test"
 }
+
+kotlin {
+	jvm()
+	js {
+		nodejs {
+			testTask {
+				testLogging {
+					events = [ "FAILED", "PASSED", "SKIPPED" ]
+					showExceptions = true
+					exceptionFormat = "FULL"
+					showExceptions = true
+					showCauses = true
+					showStackTraces = true
+				}
+			}
+		}
+		browser {
+			testTask {
+				testLogging {
+					events = [ "FAILED", "PASSED", "SKIPPED" ]
+					showExceptions = true
+					exceptionFormat = "FULL"
+					showExceptions = true
+					showCauses = true
+					showStackTraces = true
+				}
+			}
+		}
+	}
+
+	sourceSets {
+		commonMain {
+			dependencies {
+				implementation "org.jetbrains.kotlin:kotlin-stdlib-common:1.7.10"
+				implementation "org.jetbrains.kotlin:kotlin-stdlib-js:1.7.10"
+				implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
+
+			}
+		}
+		commonTest {
+			dependencies {
+				implementation "org.jetbrains.kotlin:kotlin-test-common:1.7.10"
+				implementation "org.jetbrains.kotlin:kotlin-test:1.7.10"
+			}
+		}
+	}
+}
+
+//compileKotlin {
+//	kotlinOptions.jvmTarget = 11
+//}
+//
+//compileTestKotlin {
+//	kotlinOptions.jvmTarget = 11
+//}
 
 test {
 	useJUnitPlatform()
-}
 
-compileKotlin {
-	kotlinOptions.jvmTarget = 11
-}
-
-compileTestKotlin {
-	kotlinOptions.jvmTarget = 11
+	testLogging {
+		events = [ "FAILED", "PASSED", "SKIPPED" ]
+		showExceptions = true
+		exceptionFormat = "FULL"
+		showExceptions = true
+		showCauses = true
+		showStackTraces = true
+	}
 }
