@@ -13,12 +13,12 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-	//testImplementation "org.jetbrains.kotlin:kotlin-test"
-}
-
 kotlin {
-	jvm()
+	jvm {
+		compilations.main.kotlinOptions {
+			jvmTarget = "11"
+		}
+	}
 	js {
 		nodejs {
 			testTask {
@@ -64,17 +64,7 @@ kotlin {
 	}
 }
 
-//compileKotlin {
-//	kotlinOptions.jvmTarget = 11
-//}
-//
-//compileTestKotlin {
-//	kotlinOptions.jvmTarget = 11
-//}
-
-test {
-	useJUnitPlatform()
-
+jvmTest {
 	testLogging {
 		events = [ "FAILED", "PASSED", "SKIPPED" ]
 		showExceptions = true
