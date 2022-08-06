@@ -1,7 +1,7 @@
 name: Test
 on: [ push ]
 jobs:
-  Test:
+  Build:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
